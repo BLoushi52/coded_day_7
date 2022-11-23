@@ -29,7 +29,18 @@ class StatelessFuturePage extends StatelessWidget {
           // 3- pass 'builder' the following nameless function
           // 3.a if snapshot.connectionState is ConnectionState.waiting, then return CircularProgressIndicator()
           // 3.b otherwise, return centered Text with snapshot.data
-          null,
+          FutureBuilder(
+              future: process(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                String data = snapshot.data!;
+
+                return Center(
+                  child: Text(data),
+                );
+              }),
     );
   }
 }
